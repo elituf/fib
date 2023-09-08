@@ -1,7 +1,7 @@
-use thousands::Separable;
 use num_bigint::BigUint;
-use num_traits::{ Zero, One, ToPrimitive };
+use num_traits::{One, ToPrimitive, Zero};
 use text_io::read;
+use thousands::Separable;
 
 fn main() {
     print!("Would you like to do a single (nth) fibonacci number or multiple (0..n)? [s/m]: ");
@@ -25,14 +25,18 @@ fn main() {
     }
 
     match choice {
-        's' => if let Some(chosen_number) = fibonacci_sequence.get(amount_usize) {
+        's' => {
+            if let Some(chosen_number) = fibonacci_sequence.get(amount_usize) {
                 println!("{}", chosen_number.separate_with_commas());
             } else {
                 println!("Invalid selection");
-            },
-        'm' => for (index, num) in fibonacci_sequence.iter().enumerate() {
+            }
+        }
+        'm' => {
+            for (index, num) in fibonacci_sequence.iter().enumerate() {
                 println!("{}. {}", index, num.separate_with_commas());
-            },
+            }
+        }
         _ => println!("don't do that"),
     }
 }
