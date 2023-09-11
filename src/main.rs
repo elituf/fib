@@ -1,4 +1,6 @@
 use argh::FromArgs;
+use num_bigint::BigUint;
+use num_traits::{One, Zero};
 use thousands::Separable;
 
 /// fib: an overly complicated fibonacci calculator
@@ -13,14 +15,14 @@ struct Args {
     multiple: Option<usize>,
 }
 
-fn calculate_fib(amount: usize) -> Vec<u128> {
-    let mut calc_fib_vector: Vec<u128> = Vec::new();
+fn calculate_fib(amount: usize) -> Vec<BigUint> {
+    let mut calc_fib_vector: Vec<BigUint> = Vec::new();
 
-    let mut a: u128 = 0;
-    let mut b: u128 = 1;
+    let mut a: BigUint = Zero::zero();
+    let mut b: BigUint = One::one();
 
     for _ in 0..=amount {
-        calc_fib_vector.push(a);
+        calc_fib_vector.push(a.clone());
         let next = a + b.clone();
         a = b;
         b = next;
@@ -35,7 +37,7 @@ fn main() {
     if args.single.is_some() && args.multiple.is_some() {
         panic!("/ please pick either --single or --multiple! /")
     } else if args.single.is_some() {
-        let fib_vector: Vec<u128> = calculate_fib(args.single.unwrap());
+        let fib_vector: Vec<BigUint> = calculate_fib(args.single.unwrap());
 
         println!(
             "{}",
@@ -45,7 +47,7 @@ fn main() {
                 .separate_with_commas()
         );
     } else if args.multiple.is_some() {
-        let fib_vector: Vec<u128> = calculate_fib(args.multiple.unwrap());
+        let fib_vector: Vec<BigUint> = calculate_fib(args.multiple.unwrap());
 
         for (index, num) in fib_vector.iter().enumerate() {
             println!("{}. {}", index, num.separate_with_commas());
