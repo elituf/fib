@@ -52,5 +52,7 @@ fn main() {
         for (index, num) in fib_vector.iter().enumerate() {
             println!("{}. {}", index, num.separate_with_commas());
         }
+    } else {
+        println!("please run fib --help for more information.");
     }
 }
