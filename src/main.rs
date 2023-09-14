@@ -15,6 +15,7 @@ struct Args {
     multiple: Option<usize>,
 }
 
+/// Calculates the fibonacci sequence starting at 0
 fn calculate_fib(amount: usize) -> Vec<BigUint> {
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
 
