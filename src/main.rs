@@ -16,13 +16,13 @@ struct Args {
 }
 
 /// Calculates the fibonacci sequence starting at 0
-fn calculate_fib(amount: usize) -> Vec<BigUint> {
+fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
 
     let mut a: BigUint = Zero::zero();
     let mut b: BigUint = One::one();
 
-    for _ in 0..=amount {
+    for _ in 0..=limit_nth {
         calc_fib_vector.push(a.clone());
         let next = a + b.clone();
         a = b;
