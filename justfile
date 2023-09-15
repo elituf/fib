@@ -13,4 +13,4 @@ install:
 
 # lints excessively with clippy
 lint:
-    cargo clippy -- -W clippy::pedantic -W clippy::nursery -W clippy::unwrap_used
+    @cargo clippy -- -W clippy::pedantic -W clippy::nursery -W clippy::unwrap_used

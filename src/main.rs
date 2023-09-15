@@ -1,19 +1,8 @@
-use argh::FromArgs;
 use num_bigint::BigUint;
 use num_traits::{One, Zero};
 use thousands::Separable;
 
-/// fib: an overly complicated fibonacci calculator
-#[derive(FromArgs, PartialEq)]
-struct Args {
-    /// calculate the nth fibonacci number
-    #[argh(option, short = 's')]
-    single: Option<usize>,
-
-    /// calculate 0..n fibonacci numbers
-    #[argh(option, short = 'm')]
-    multiple: Option<usize>,
-}
+mod args;
 
 /// Calculates the fibonacci sequence starting at 0
 fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
@@ -32,7 +21,7 @@ fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
 }
 
 fn main() {
-    let args: Args = argh::from_env();
+    let args: args::Args = argh::from_env();
 
     match (args.single, args.multiple) {
         (Some(single), None) => {
