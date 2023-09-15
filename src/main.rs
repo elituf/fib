@@ -18,7 +18,6 @@ struct Args {
 /// Calculates the fibonacci sequence starting at 0
 fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
-
     let mut a: BigUint = Zero::zero();
     let mut b: BigUint = One::one();
 
@@ -36,13 +35,10 @@ fn main() {
     let args: Args = argh::from_env();
 
     match (args.single, args.multiple) {
-        (Some(_single), Some(_multiple)) => {
-            println!("please pick either --single or --multiple!");
-        }
         (Some(single), None) => {
             let fib_vector: Vec<BigUint> = calculate_fib(single);
 
-            println!("{}", fib_vector.get(single).unwrap().separate_with_commas());
+            println!("{}", fib_vector[single].separate_with_commas());
         }
         (None, Some(multiple)) => {
             let fib_vector: Vec<BigUint> = calculate_fib(multiple);
@@ -53,6 +49,9 @@ fn main() {
         }
         (None, None) => {
             println!("please run fib --help for more information.");
+        }
+        (Some(_), Some(_)) => {
+            println!("please pick either --single or --multiple!");
         }
     }
 }
