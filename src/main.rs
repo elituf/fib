@@ -35,25 +35,24 @@ fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
 fn main() {
     let args: Args = argh::from_env();
 
-    if args.single.is_some() && args.multiple.is_some() {
-        panic!("/ please pick either --single or --multiple! /")
-    } else if args.single.is_some() {
-        let fib_vector: Vec<BigUint> = calculate_fib(args.single.unwrap());
-
-        println!(
-            "{}",
-            fib_vector
-                .get(args.single.unwrap())
-                .unwrap()
-                .separate_with_commas()
-        );
-    } else if args.multiple.is_some() {
-        let fib_vector: Vec<BigUint> = calculate_fib(args.multiple.unwrap());
-
-        for (index, num) in fib_vector.iter().enumerate() {
-            println!("{}. {}", index, num.separate_with_commas());
+    match (args.single, args.multiple) {
+        (Some(_single), Some(_multiple)) => {
+            println!("please pick either --single or --multiple!")
         }
-    } else {
-        println!("please run fib --help for more information.");
+        (Some(single), None) => {
+            let fib_vector: Vec<BigUint> = calculate_fib(single);
+
+            println!("{}", fib_vector.get(single).unwrap().separate_with_commas());
+        }
+        (None, Some(multiple)) => {
+            let fib_vector: Vec<BigUint> = calculate_fib(multiple);
+
+            for (index, num) in fib_vector.iter().enumerate() {
+                println!("{}. {}", index, num.separate_with_commas());
+            }
+        }
+        (None, None) => {
+            println!("please run fib --help for more information.");
+        }
     }
 }
