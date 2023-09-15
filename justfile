@@ -10,3 +10,7 @@ build:
 # install or update fib to default cargo location
 install:
     cargo install --path .
+
+# lints excessively with clippy
+lint:
+    cargo clippy -- -W clippy::pedantic -W clippy::nursery -W clippy::unwrap_used
