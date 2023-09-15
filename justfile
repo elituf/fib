@@ -7,10 +7,6 @@ _default:
 build:
     cargo build --release
 
-# install fib to default cargo location
+# install or update fib to default cargo location
 install:
     cargo install --path .
-
-# update the previously installed fib
-update:
-    cargo install --path . --force
