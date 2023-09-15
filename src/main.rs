@@ -37,7 +37,7 @@ fn main() {
 
     match (args.single, args.multiple) {
         (Some(_single), Some(_multiple)) => {
-            println!("please pick either --single or --multiple!")
+            println!("please pick either --single or --multiple!");
         }
         (Some(single), None) => {
             let fib_vector: Vec<BigUint> = calculate_fib(single);
