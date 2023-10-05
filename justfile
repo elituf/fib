@@ -3,11 +3,11 @@ set windows-shell := ["pwsh.exe", "-NoLogo", "-Command"]
 _default:
     @just --list
 
-# build fib
+# build in release mode
 build:
     cargo build --release
 
-# install or update fib to default cargo location
+# install or update to default cargo location
 install:
     cargo install --path .
 
