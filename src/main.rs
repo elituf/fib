@@ -1,5 +1,6 @@
 use colored::Colorize;
 use ibig::{ubig, UBig};
+use std::mem::replace;
 use std::time::Instant;
 
 mod args;
@@ -12,9 +13,8 @@ fn calculate_fib(limit_nth: usize) -> Vec<UBig> {
 
     for _ in 0..=limit_nth {
         calc_fib_vector.push(a.clone()); // first we push a copy of a to the vec
-        let next: UBig = a + b.clone(); // then we set the next value to be the sum of a + copy of b
-        a = b; // then we set a to be equal to b
-        b = next; // finally we set b to be next
+        let next = a + &b; // then we assign next to be the sum of a + borrowed b
+        a = replace(&mut b, next); // finally we replace a mutable borrow of b with next (somehow) and assign to a
     }
 
     calc_fib_vector
@@ -41,6 +41,7 @@ fn main() {
             for (index, num) in fib_vector.iter().enumerate() {
                 println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
             }
+
             println!("\n{} {:?}", "Time taken:".green(), is);
         }
         (None, None) => {
