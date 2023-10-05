@@ -1,5 +1,6 @@
 use num_bigint::BigUint;
 use num_traits::{One, Zero};
+use std::time::Instant;
 use thousands::Separable;
 
 mod args;
@@ -25,16 +26,24 @@ fn main() {
 
     match (args.single, args.multiple) {
         (Some(single), None) => {
+            let was = Instant::now();
             let fib_vector: Vec<BigUint> = calculate_fib(single);
+            let is = was.elapsed();
 
+            // TODO: maybe figure out how to make this only use thousands
+            // separators up to a certain number (accounting for BigUint)
             println!("{}", fib_vector[single].separate_with_commas());
+            println!("\nTime taken: {:?}", is);
         }
         (None, Some(multiple)) => {
+            let was = Instant::now();
             let fib_vector: Vec<BigUint> = calculate_fib(multiple);
+            let is = was.elapsed();
 
             for (index, num) in fib_vector.iter().enumerate() {
                 println!("{}. {}", index, num.separate_with_commas());
             }
+            println!("\nTime taken: {:?}", is);
         }
         (None, None) => {
             println!("please run fib --help for more information.");
