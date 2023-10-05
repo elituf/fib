@@ -1,22 +1,20 @@
 use colored::Colorize;
-use num_bigint::{BigUint, ToBigUint};
-use num_traits::{One, Zero};
+use ibig::{ubig, UBig};
 use std::time::Instant;
-use thousands::Separable;
 
 mod args;
 
-/// Calculates the fibonacci sequence starting at 0
-fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
-    let mut calc_fib_vector: Vec<BigUint> = Vec::new();
-    let mut a: BigUint = Zero::zero();
-    let mut b: BigUint = One::one();
+/// calculates the fibonacci sequence starting at 0
+fn calculate_fib(limit_nth: usize) -> Vec<UBig> {
+    let mut calc_fib_vector: Vec<UBig> = Vec::new();
+    let mut a: UBig = ubig!(0);
+    let mut b: UBig = ubig!(1);
 
     for _ in 0..=limit_nth {
-        calc_fib_vector.push(a.clone());
-        let next = a + b.clone();
-        a = b;
-        b = next;
+        calc_fib_vector.push(a.clone()); // first we push a copy of a to the vec
+        let next: UBig = a + b.clone(); // then we set the next value to be the sum of a + copy of b
+        a = b; // then we set a to be equal to b
+        b = next; // finally we set b to be next
     }
 
     calc_fib_vector
@@ -28,41 +26,20 @@ fn main() {
     match (args.single, args.multiple) {
         (Some(single), None) => {
             let was = Instant::now();
-            let fib_vector: Vec<BigUint> = calculate_fib(single);
+            let fib_vector: Vec<UBig> = calculate_fib(single);
             let is = was.elapsed();
 
-            if fib_vector[single]
-                <= u128::MAX
-                    .to_biguint()
-                    .expect("expected an integer between 0..u128::MAX")
-            {
-                println!("{}", fib_vector[single].separate_with_commas());
-            } else {
-                println!("{}", fib_vector[single]);
-            }
+            println!("{}", fib_vector[single]);
 
             println!("\n{} {:?}", "Time taken:".green(), is);
         }
         (None, Some(multiple)) => {
             let was = Instant::now();
-            let fib_vector: Vec<BigUint> = calculate_fib(multiple);
+            let fib_vector: Vec<UBig> = calculate_fib(multiple);
             let is = was.elapsed();
 
             for (index, num) in fib_vector.iter().enumerate() {
-                if num
-                    <= &u128::MAX
-                        .to_biguint()
-                        .expect("expected an integer between 0..u128::MAX")
-                {
-                    println!(
-                        "{}{} {}",
-                        index.to_string().bold(),
-                        ".".bold(),
-                        num.separate_with_commas()
-                    );
-                } else {
-                    println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
-                }
+                println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
             }
             println!("\n{} {:?}", "Time taken:".green(), is);
         }
