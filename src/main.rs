@@ -1,3 +1,4 @@
+use colored::Colorize;
 use num_bigint::{BigUint, ToBigUint};
 use num_traits::{One, Zero};
 use std::time::Instant;
@@ -40,19 +41,30 @@ fn main() {
                 println!("{}", fib_vector[single]);
             }
 
-            println!("\nTime taken: {is:?}");
+            println!("\n{} {:?}", "Time taken:".green(), is);
         }
         (None, Some(multiple)) => {
             let was = Instant::now();
             let fib_vector: Vec<BigUint> = calculate_fib(multiple);
             let is = was.elapsed();
 
-            // TODO: add the same shit for this as above for single
             for (index, num) in fib_vector.iter().enumerate() {
-                println!("{}. {}", index, num.separate_with_commas());
+                if num
+                    <= &u128::MAX
+                        .to_biguint()
+                        .expect("expected an integer between 0..u128::MAX")
+                {
+                    println!(
+                        "{}{} {}",
+                        index.to_string().bold(),
+                        ".".bold(),
+                        num.separate_with_commas()
+                    );
+                } else {
+                    println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
+                }
             }
-
-            println!("\nTime taken: {is:?}");
+            println!("\n{} {:?}", "Time taken:".green(), is);
         }
         (None, None) => {
             println!("please run fib --help for more information.");

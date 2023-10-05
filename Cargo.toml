@@ -1,6 +1,6 @@
 [package]
 name = "fib"
-version = "0.3.3"
+version = "0.3.4"
 edition = "2021"
 
 [profile.release]
@@ -13,3 +13,4 @@ argh = "0.1.12"
 thousands = "0.2.0"
 num-bigint = "0.4.4"
 num-traits = "0.2.16"
+colored = "2.0.4"
