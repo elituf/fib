@@ -5,16 +5,29 @@ use std::time::Instant;
 
 mod args;
 
-/// calculates the fibonacci sequence starting at 0
-fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
+/// calculates only the nth fibonacci number
+fn calculate_fib_sing(nth: usize) -> BigUint {
+    let mut a: BigUint = 0.to_biguint().expect("0");
+    let mut b: BigUint = 1.to_biguint().expect("1");
+
+    for _ in 0..nth {
+        let next = a + &b;
+        a = replace(&mut b, next);
+    }
+
+    a
+}
+
+/// calculates the fibonacci sequence starting at 0 into a vector
+fn calculate_fib_mult(limit_nth: usize) -> Vec<BigUint> {
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
     let mut a: BigUint = 0.to_biguint().expect("0");
     let mut b: BigUint = 1.to_biguint().expect("1");
 
     for _ in 0..=limit_nth {
-        calc_fib_vector.push(a.clone()); // first we push a copy of a to the vec
-        let next = a + &b; // then we assign next to be the sum of a + borrowed b
-        a = replace(&mut b, next); // finally we replace a mutable borrow of b with next (somehow) and assign to a
+        calc_fib_vector.push(a.clone());
+        let next = a + &b;
+        a = replace(&mut b, next);
     }
 
     calc_fib_vector
@@ -26,16 +39,16 @@ fn main() {
     match (args.single, args.multiple) {
         (Some(single), None) => {
             let was = Instant::now();
-            let fib_vector: Vec<BigUint> = calculate_fib(single);
+            let fib = calculate_fib_sing(single);
             let is = was.elapsed();
 
-            println!("{}", fib_vector[single]);
+            println!("{fib}");
 
             println!("\n{} {:?}", "Time taken:".green(), is);
         }
         (None, Some(multiple)) => {
             let was = Instant::now();
-            let fib_vector: Vec<BigUint> = calculate_fib(multiple);
+            let fib_vector: Vec<BigUint> = calculate_fib_mult(multiple);
             let is = was.elapsed();
 
             for (index, num) in fib_vector.iter().enumerate() {
