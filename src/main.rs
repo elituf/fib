@@ -44,9 +44,10 @@ fn main() {
             let calc_duration = was.elapsed();
 
             println!("{fib}");
+            let print_duration = was.elapsed() - calc_duration;
 
             println!(
-                "\n{}{:?}",
+                "\n{}{:?}\n{}{:?}",
                 format!(
                     "{} {}{}",
                     "Time taken to calculate",
@@ -55,6 +56,8 @@ fn main() {
                 )
                 .green(),
                 calc_duration,
+                "Additional time taken to print: ".green(),
+                print_duration
             );
         }
         (None, Some(multiple)) => {
@@ -66,8 +69,10 @@ fn main() {
                 println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
             }
 
+            let print_duration = was.elapsed() - calc_duration;
+
             println!(
-                "\n{}{:?}",
+                "\n{}{:?}\n{}{:?}",
                 format!(
                     "{} {}{}",
                     "Time taken to calculate",
@@ -75,7 +80,9 @@ fn main() {
                     "th digit: "
                 )
                 .green(),
-                calc_duration
+                calc_duration,
+                "Additional time taken to print: ".green(),
+                print_duration
             );
         }
         (None, None) => {
