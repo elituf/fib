@@ -77,7 +77,7 @@ fn main() {
                     "{} {}{}",
                     "Time taken to calculate",
                     multiple.separate_with_commas(),
-                    "th digit: "
+                    "digits: "
                 )
                 .green(),
                 calc_duration,
