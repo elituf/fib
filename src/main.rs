@@ -74,7 +74,7 @@ fn main() {
             println!(
                 "\n{}{:?}\n{}{:?}",
                 format!(
-                    "{} {}{}",
+                    "{} {} {}",
                     "Time taken to calculate",
                     multiple.separate_with_commas(),
                     "digits: "
