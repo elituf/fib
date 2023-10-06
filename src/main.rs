@@ -1,15 +1,15 @@
 use colored::Colorize;
-use ibig::{ubig, UBig};
+use num_bigint::{BigUint, ToBigUint};
 use std::mem::replace;
 use std::time::Instant;
 
 mod args;
 
 /// calculates the fibonacci sequence starting at 0
-fn calculate_fib(limit_nth: usize) -> Vec<UBig> {
-    let mut calc_fib_vector: Vec<UBig> = Vec::new();
-    let mut a: UBig = ubig!(0);
-    let mut b: UBig = ubig!(1);
+fn calculate_fib(limit_nth: usize) -> Vec<BigUint> {
+    let mut calc_fib_vector: Vec<BigUint> = Vec::new();
+    let mut a: BigUint = 0.to_biguint().expect("0");
+    let mut b: BigUint = 1.to_biguint().expect("1");
 
     for _ in 0..=limit_nth {
         calc_fib_vector.push(a.clone()); // first we push a copy of a to the vec
@@ -26,7 +26,7 @@ fn main() {
     match (args.single, args.multiple) {
         (Some(single), None) => {
             let was = Instant::now();
-            let fib_vector: Vec<UBig> = calculate_fib(single);
+            let fib_vector: Vec<BigUint> = calculate_fib(single);
             let is = was.elapsed();
 
             println!("{}", fib_vector[single]);
@@ -35,7 +35,7 @@ fn main() {
         }
         (None, Some(multiple)) => {
             let was = Instant::now();
-            let fib_vector: Vec<UBig> = calculate_fib(multiple);
+            let fib_vector: Vec<BigUint> = calculate_fib(multiple);
             let is = was.elapsed();
 
             for (index, num) in fib_vector.iter().enumerate() {
