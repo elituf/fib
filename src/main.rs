@@ -2,6 +2,7 @@ use colored::Colorize;
 use num_bigint::{BigUint, ToBigUint};
 use std::mem::replace;
 use std::time::Instant;
+use thousands::Separable;
 
 mod args;
 
@@ -40,22 +41,42 @@ fn main() {
         (Some(single), None) => {
             let was = Instant::now();
             let fib = calculate_fib_sing(single);
-            let is = was.elapsed();
+            let calc_duration = was.elapsed();
 
             println!("{fib}");
 
-            println!("\n{} {:?}", "Time taken:".green(), is);
+            println!(
+                "\n{}{:?}",
+                format!(
+                    "{} {}{}",
+                    "Time taken to calculate",
+                    single.separate_with_commas(),
+                    "th digit: "
+                )
+                .green(),
+                calc_duration,
+            );
         }
         (None, Some(multiple)) => {
             let was = Instant::now();
             let fib_vector: Vec<BigUint> = calculate_fib_mult(multiple);
-            let is = was.elapsed();
+            let calc_duration = was.elapsed();
 
             for (index, num) in fib_vector.iter().enumerate() {
                 println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
             }
 
-            println!("\n{} {:?}", "Time taken:".green(), is);
+            println!(
+                "\n{}{:?}",
+                format!(
+                    "{} {}{}",
+                    "Time taken to calculate",
+                    multiple.separate_with_commas(),
+                    "th digit: "
+                )
+                .green(),
+                calc_duration
+            );
         }
         (None, None) => {
             println!("please run fib --help for more information.");
