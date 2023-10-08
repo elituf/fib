@@ -1,5 +1,6 @@
 use colored::Colorize;
-use num_bigint::{BigUint, ToBigUint};
+use num_bigint::BigUint;
+use num_traits::{One, Zero};
 use std::mem::replace;
 use std::time::Instant;
 use thousands::Separable;
@@ -8,8 +9,8 @@ mod args;
 
 /// calculates only the nth fibonacci number
 fn calculate_fib_sing(nth: usize) -> BigUint {
-    let mut a: BigUint = 0.to_biguint().expect("0");
-    let mut b: BigUint = 1.to_biguint().expect("1");
+    let mut a = BigUint::zero();
+    let mut b = BigUint::one();
 
     for _ in 0..nth {
         let next = a + &b;
@@ -22,8 +23,8 @@ fn calculate_fib_sing(nth: usize) -> BigUint {
 /// calculates the fibonacci sequence starting at 0 into a vector
 fn calculate_fib_mult(limit_nth: usize) -> Vec<BigUint> {
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
-    let mut a: BigUint = 0.to_biguint().expect("0");
-    let mut b: BigUint = 1.to_biguint().expect("1");
+    let mut a = BigUint::zero();
+    let mut b = BigUint::one();
 
     for _ in 0..=limit_nth {
         calc_fib_vector.push(a.clone());
