@@ -1,8 +1,7 @@
 use colored::Colorize;
 use num_bigint::BigUint;
 use num_traits::{One, Zero};
-use std::mem::replace;
-use std::time::Instant;
+use std::{mem::replace, time::Instant};
 use thousands::Separable;
 
 mod args;
@@ -20,7 +19,7 @@ fn calculate_fib_sing(nth: usize) -> BigUint {
     a
 }
 
-/// calculates the fibonacci sequence starting at 0 into a vector
+/// calculates the fibonacci sequence 0..n into a vector
 fn calculate_fib_mult(limit_nth: usize) -> Vec<BigUint> {
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
     let mut a = BigUint::zero();
