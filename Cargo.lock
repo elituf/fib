@@ -88,7 +88,7 @@ dependencies = [
 
 [[package]]
 name = "fib"
-version = "0.5.4"
+version = "0.6.0"
 dependencies = [
  "argh",
  "colored",

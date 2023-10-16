@@ -10,4 +10,8 @@ pub struct Args {
     /// calculate 0..n fibonacci numbers
     #[argh(option, short = 'm')]
     pub multiple: Option<usize>,
+
+    /// calculate 0..n fibonacci numbers
+    #[argh(switch, short = 'a')]
+    pub analytics: bool,
 }
