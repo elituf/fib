@@ -11,7 +11,7 @@ pub struct Args {
     #[argh(option, short = 'm')]
     pub multiple: Option<usize>,
 
-    /// calculate 0..n fibonacci numbers
+    /// whether to print the "analytics" (calc time, print time etc)
     #[argh(switch, short = 'a')]
     pub analytics: bool,
 }

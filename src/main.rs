@@ -50,36 +50,42 @@ fn print_analytics(amount: usize, calc_duration: Duration, print_duration: Durat
     );
 }
 
+fn print_single(amount: usize) {
+    let args: args::Args = argh::from_env();
+
+    let was = Instant::now();
+    let fib = calculate_fib_sing(amount);
+    let calc_duration = was.elapsed();
+    println!("{fib}");
+    let print_duration = was.elapsed() - calc_duration;
+
+    if args.analytics {
+        print_analytics(amount, calc_duration, print_duration)
+    }
+}
+
+fn print_multiple(amount: usize) {
+    let args: args::Args = argh::from_env();
+
+    let was = Instant::now();
+    let fib_vector: Vec<BigUint> = calculate_fib_mult(amount);
+    let calc_duration = was.elapsed();
+    for (index, num) in fib_vector.iter().enumerate() {
+        println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
+    }
+    let print_duration = was.elapsed() - calc_duration;
+
+    if args.analytics {
+        print_analytics(amount, calc_duration, print_duration)
+    }
+}
+
 fn main() {
     let args: args::Args = argh::from_env();
 
     match (args.single, args.multiple) {
-        (Some(single), None) => {
-            let was = Instant::now();
-            let fib = calculate_fib_sing(single);
-            let calc_duration = was.elapsed();
-            println!("{fib}");
-            let print_duration = was.elapsed() - calc_duration;
-
-            if args.analytics {
-                print_analytics(single, calc_duration, print_duration)
-            }
-        }
-        (None, Some(multiple)) => {
-            let was = Instant::now();
-            let fib_vector: Vec<BigUint> = calculate_fib_mult(multiple);
-            let calc_duration = was.elapsed();
-            for (index, num) in fib_vector.iter().enumerate() {
-                println!("{}{} {}", index.to_string().bold(), ".".bold(), num);
-            }
-            let print_duration = was.elapsed() - calc_duration;
-
-            if args.analytics {
-                print_analytics(multiple, calc_duration, print_duration)
-            }
-        }
-        (_, _) => {
-            println!("please run fib --help for more information.");
-        }
+        (Some(amount), None) => print_single(amount),
+        (None, Some(amount)) => print_multiple(amount),
+        (_, _) => println!("please run fib --help for more information."),
     }
 }
