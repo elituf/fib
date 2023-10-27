@@ -14,4 +14,8 @@ pub struct Args {
     /// whether to print the "analytics" (calc time, print time etc)
     #[argh(switch, short = 'a')]
     pub analytics: bool,
+
+    /// whether to separate with commas
+    #[argh(switch, short = 'c')]
+    pub commas: bool,
 }
