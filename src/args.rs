@@ -15,7 +15,7 @@ pub struct Args {
     #[argh(switch, short = 'a')]
     pub analytics: bool,
 
-    /// whether to separate with commas
+    /// whether to separate thousands with commas
     #[argh(switch, short = 'c')]
     pub commas: bool,
 }
