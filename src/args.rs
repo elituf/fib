@@ -8,9 +8,9 @@ pub struct Args {
     #[arg(short, long)]
     pub single: Option<usize>,
 
-    /// calculate 0..n fibonacci numbers
+    /// calculate [n..n] fibonacci numbers
     #[arg(short, long)]
-    pub multiple: Option<usize>,
+    pub multiple: Option<String>, // FIXME
 
     /// whether to print the "analytics" (calc time, print time etc)
     #[arg(short, long)]

@@ -3,10 +3,10 @@ use num_traits::{One, Zero};
 use std::mem::replace;
 
 /// calculates only the nth fibonacci number
-pub fn calculate_fib_sing(nth: usize) -> BigUint {
+pub fn calculate_fib_sing(n: usize) -> BigUint {
     let mut a = BigUint::zero();
     let mut b = BigUint::one();
-    for _ in 0..nth {
+    for _ in 0..n {
         let next = a + &b;
         a = replace(&mut b, next);
     }
@@ -15,11 +15,11 @@ pub fn calculate_fib_sing(nth: usize) -> BigUint {
 }
 
 /// calculates the fibonacci sequence 0..n into a vector
-pub fn calculate_fib_mult(limit_nth: usize) -> Vec<BigUint> {
+pub fn calculate_fib_mult(end: usize) -> Vec<BigUint> {
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
     let mut a = BigUint::zero();
     let mut b = BigUint::one();
-    for _ in 0..=limit_nth {
+    for _ in 0..=end {
         calc_fib_vector.push(a.clone());
         let next = a + &b;
         a = replace(&mut b, next);

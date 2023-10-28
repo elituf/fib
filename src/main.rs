@@ -10,7 +10,14 @@ fn main() {
 
     match (args.single, args.multiple) {
         (Some(amount), None) => print_fib::single(amount),
-        (None, Some(amount)) => print_fib::multiple(amount),
+        (None, Some(amount)) => {
+            // FIXME
+            let range: Vec<&str> = amount.split("..").collect();
+            let start: usize = range[0].parse().expect("i need an input with format n..n");
+            let end: usize = range[1].parse().expect("i need an input with format n..n");
+
+            print_fib::multiple(start..end)
+        }
         (_, _) => println!("please run fib --help for more information."),
     }
 }

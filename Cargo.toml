@@ -1,6 +1,6 @@
 [package]
 name = "fib"
-version = "0.8.0"
+version = "1.0.0"
 edition = "2021"
 license = "BSL-1.0"
 

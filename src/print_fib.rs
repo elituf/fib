@@ -1,13 +1,13 @@
 use clap::Parser;
 use colored::Colorize;
 use num_bigint::BigUint;
-use std::time::Instant;
+use std::{ops::Range, time::Instant};
 use thousands::Separable;
 
-use crate::{calculation, print_other};
+use crate::{args::Args, calculation, print_other};
 
 pub fn single(amount: usize) {
-    let args = crate::args::Args::parse();
+    let args = Args::parse();
 
     let was = Instant::now();
     let fib = calculation::calculate_fib_sing(amount);
@@ -24,22 +24,24 @@ pub fn single(amount: usize) {
     }
 }
 
-pub fn multiple(amount: usize) {
-    let args = crate::args::Args::parse();
+pub fn multiple(amount: Range<usize>) {
+    let args = Args::parse();
 
     let was = Instant::now();
-    let fib_vector: Vec<BigUint> = calculation::calculate_fib_mult(amount);
+    let fib_vector: Vec<BigUint> = calculation::calculate_fib_mult(amount.end);
     let calc_duration = was.elapsed();
     for (index, fib) in fib_vector.iter().enumerate() {
-        if args.commas {
-            println!("{}{} {}", index.to_string().bold(), ".".bold(), fib.separate_with_commas());
-        } else {
-            println!("{}{} {}", index.to_string().bold(), ".".bold(), fib);
+        if index >= amount.start {
+            if args.commas {
+                println!("{}. {}", index.to_string().bold(), fib.separate_with_commas());
+            } else {
+                println!("{}. {}", index.to_string().bold(), fib);
+            }
         }
     }
     let print_duration = was.elapsed() - calc_duration;
 
     if args.analytics {
-        print_other::analytics(amount, calc_duration, print_duration);
+        print_other::analytics(amount.end, calc_duration, print_duration);
     }
 }
