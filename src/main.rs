@@ -3,8 +3,10 @@ mod calculation;
 mod print_fib;
 mod print_other;
 
+use clap::Parser;
+
 fn main() {
-    let args: args::Args = argh::from_env();
+    let args = crate::args::Args::parse();
 
     match (args.single, args.multiple) {
         (Some(amount), None) => print_fib::single(amount),

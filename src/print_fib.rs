@@ -1,12 +1,13 @@
+use clap::Parser;
 use colored::Colorize;
 use num_bigint::BigUint;
 use std::time::Instant;
 use thousands::Separable;
 
-use crate::{args, calculation, print_other};
+use crate::{calculation, print_other};
 
 pub fn single(amount: usize) {
-    let args: args::Args = argh::from_env();
+    let args = crate::args::Args::parse();
 
     let was = Instant::now();
     let fib = calculation::calculate_fib_sing(amount);
@@ -24,7 +25,7 @@ pub fn single(amount: usize) {
 }
 
 pub fn multiple(amount: usize) {
-    let args: args::Args = argh::from_env();
+    let args = crate::args::Args::parse();
 
     let was = Instant::now();
     let fib_vector: Vec<BigUint> = calculation::calculate_fib_mult(amount);

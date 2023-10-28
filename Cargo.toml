@@ -1,6 +1,6 @@
 [package]
 name = "fib"
-version = "0.7.0"
+version = "0.8.0"
 edition = "2021"
 license = "BSL-1.0"
 
@@ -10,7 +10,7 @@ lto = true
 codegen-units = 1
 
 [dependencies]
-argh = "0.1.12"
+clap = { version = "4.4.7", features = ["derive"] }
 colored = "2.0.4"
 num-bigint = "0.4.4"
 num-traits = "0.2.17"

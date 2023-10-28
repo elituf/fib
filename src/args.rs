@@ -1,21 +1,22 @@
-use argh::FromArgs;
+use clap::Parser;
 
 /// fib: an overly complicated fibonacci calculator
-#[derive(FromArgs, PartialEq, Eq)]
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
 pub struct Args {
     /// calculate the nth fibonacci number
-    #[argh(option, short = 's')]
+    #[arg(short, long)]
     pub single: Option<usize>,
 
     /// calculate 0..n fibonacci numbers
-    #[argh(option, short = 'm')]
+    #[arg(short, long)]
     pub multiple: Option<usize>,
 
     /// whether to print the "analytics" (calc time, print time etc)
-    #[argh(switch, short = 'a')]
+    #[arg(short, long)]
     pub analytics: bool,
 
     /// whether to separate thousands with commas
-    #[argh(switch, short = 'c')]
+    #[arg(short, long)]
     pub commas: bool,
 }
