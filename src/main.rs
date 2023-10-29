@@ -11,7 +11,6 @@ fn main() {
     match (args.single, args.multiple) {
         (Some(amount), None) => print_fib::single(amount),
         (None, Some(amount)) => {
-            // FIXME
             let range: Vec<&str> = amount.split("..").collect();
             let start: usize = range[0].parse().expect("i need an input with format n..n");
             let end: usize = range[1].parse().expect("i need an input with format n..n");

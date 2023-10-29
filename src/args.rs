@@ -10,7 +10,7 @@ pub struct Args {
 
     /// calculate [n..n] fibonacci numbers
     #[arg(short, long)]
-    pub multiple: Option<String>, // FIXME
+    pub multiple: Option<String>,
 
     /// whether to print the "analytics" (calc time, print time etc)
     #[arg(short, long)]
