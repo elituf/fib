@@ -9,5 +9,5 @@ pub fn analytics(amount: usize, calc_duration: Duration, print_duration: Duratio
         format!("{} {} {}", "time taken to calculate", amount.separate_with_commas(), "digits: ").green(),
         calc_duration,
     );
-    println!("{}{:?}", "additional time taken to print: ".green(), print_duration)
+    println!("{}{:?}", "additional time taken to print: ".green(), print_duration);
 }
