@@ -9,16 +9,14 @@ use eyre::Result;
 fn main() -> Result<()> {
     let args = crate::args::Args::parse();
 
-    match (args.single, args.multiple) {
-        (Some(amount), None) => print_fib::single(amount),
-        (None, Some(amount)) => {
-            let range: Vec<&str> = amount.split("..").collect();
-            let start: usize = range[0].parse()?;
-            let end: usize = range[1].parse()?;
-
-            print_fib::multiple(start..end);
-        }
-        (_, _) => return Ok(()),
+    if let Some(n) = args.single {
+        print_fib::single(n)
+    }
+    if let Some(range) = args.multiple {
+        let range: Vec<&str> = range.split("..").collect();
+        let start = range[0].parse::<usize>()?;
+        let end = range[1].parse::<usize>()?;
+        print_fib::multiple(start..end);
     }
 
     Ok(())
