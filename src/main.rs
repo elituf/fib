@@ -1,21 +1,18 @@
 mod args;
 mod calculation;
+mod file;
 mod format;
 
+use std::ops::Range;
+
 use clap::Parser;
-use colored::Colorize;
 use eyre::Result;
-use std::{env::current_dir, fs::File, io::Write};
 
-fn file(output: String, amount: String) -> Result<()> {
-    let file_name = format!("{}th_fibonacci.txt", amount);
-    let current_dir = current_dir()?.canonicalize()?;
-
-    let mut file = File::create(&file_name)?;
-    file.write(output.as_bytes())?;
-    println!("saved file {} to {}", file_name.bold(), current_dir.to_string_lossy().trim_start_matches(r"\\?\"));
-
-    Ok(())
+fn parse_range(range: &String) -> Result<Range<usize>> {
+    let range_vec: Vec<&str> = range.split("..").collect();
+    let start = range_vec[0].parse::<usize>()?;
+    let end = range_vec[1].parse::<usize>()?;
+    Ok(start..end)
 }
 
 fn main() -> Result<()> {
@@ -25,20 +22,16 @@ fn main() -> Result<()> {
         let output = format::single(n);
 
         if args.file {
-            file(output, n.to_string())?;
+            file::save_to_file(output, n.to_string())?;
         } else {
             println!("{}", output);
         }
     }
     if let Some(range) = args.multiple {
-        let range_vec: Vec<&str> = range.split("..").collect();
-        let range_start = range_vec[0].parse::<usize>()?;
-        let range_end = range_vec[1].parse::<usize>()?;
-
-        let output = format::multiple(range_start..range_end)?;
+        let output = format::multiple(parse_range(&range)?)?;
 
         if args.file {
-            file(output, range)?;
+            file::save_to_file(output, range)?;
         } else {
             println!("{}", output);
         }
