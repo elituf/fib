@@ -19,4 +19,8 @@ pub struct Args {
     /// whether to separate thousands with commas
     #[arg(short, long)]
     pub commas: bool,
+
+    /// whether to save the number(s) to a file instead of printing
+    #[arg(short, long)]
+    pub file: bool,
 }
