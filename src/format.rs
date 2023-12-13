@@ -1,17 +1,15 @@
+use crate::{args::Args, calculation};
 use clap::Parser;
 use eyre::Result;
 use num_bigint::BigUint;
 use std::{ops::Range, time::Duration, time::Instant};
 use thousands::Separable;
 
-use crate::{args::Args, calculation};
-
 /// formats a single nth fibonacci
 pub fn single(amount: usize) -> String {
     let args = Args::parse();
     let was = Instant::now();
     let fib = calculation::calculate_fib_sing(amount);
-
     let mut output = String::new();
 
     if args.commas {
@@ -32,7 +30,6 @@ pub fn multiple(range: Range<usize>) -> Result<String> {
     let args = Args::parse();
     let was = Instant::now();
     let fib_vector: Vec<BigUint> = calculation::calculate_fib_mult(range.end);
-
     let mut output = String::new();
 
     for (index, fib) in fib_vector.iter().enumerate() {

@@ -1,22 +1,30 @@
+use args::Args;
+use clap::Parser;
+use eyre::Result;
+use std::num::ParseIntError;
+use std::ops::Range;
+
 mod args;
 mod calculation;
 mod file;
 mod format;
 
-use std::ops::Range;
-
-use clap::Parser;
-use eyre::Result;
-
 fn parse_range(range: &String) -> Result<Range<usize>> {
-    let range_vec: Vec<&str> = range.split("..").collect();
-    let start = range_vec[0].parse::<usize>()?;
-    let end = range_vec[1].parse::<usize>()?;
-    Ok(start..end)
+    let range: Result<Vec<usize>, ParseIntError> = range
+        .split("..")
+        .collect::<Vec<&str>>()
+        .iter()
+        .map(|value| value.parse::<usize>())
+        .collect();
+
+    match range {
+        Ok(range) => Ok(range[0]..range[1]),
+        Err(why) => Err(why.into()),
+    }
 }
 
 fn main() -> Result<()> {
-    let args = crate::args::Args::parse();
+    let args = Args::parse();
 
     if let Some(n) = args.single {
         let output = format::single(n);
