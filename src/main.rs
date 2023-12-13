@@ -1,26 +1,41 @@
-use args::Args;
 use clap::Parser;
 use eyre::Result;
-use std::num::ParseIntError;
 use std::ops::Range;
 
-mod args;
 mod calculation;
 mod file;
 mod format;
 
-fn parse_range(range: &String) -> Result<Range<usize>> {
-    let range: Result<Vec<usize>, ParseIntError> = range
-        .split("..")
-        .collect::<Vec<&str>>()
-        .iter()
-        .map(|value| value.parse::<usize>())
-        .collect();
+/// fib: an overly complicated fibonacci calculator
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None, arg_required_else_help = true)]
+pub struct Args {
+    /// calculate the nth fibonacci number
+    #[arg(short, long)]
+    pub single: Option<usize>,
 
-    match range {
-        Ok(range) => Ok(range[0]..range[1]),
-        Err(why) => Err(why.into()),
-    }
+    /// calculate [n..n] fibonacci numbers
+    #[arg(short, long)]
+    pub multiple: Option<String>,
+
+    /// whether to print the "analytics" (calc time, print time etc)
+    #[arg(short, long)]
+    pub analytics: bool,
+
+    /// whether to separate thousands with commas
+    #[arg(short, long)]
+    pub commas: bool,
+
+    /// whether to save the number(s) to a file instead of printing
+    #[arg(short, long)]
+    pub file: bool,
+}
+
+fn parse_range(range: &String) -> Result<Range<usize>> {
+    let range: Vec<&str> = range.split("..").collect();
+    let start: usize = range[0].parse()?;
+    let end: usize = range[1].parse()?;
+    Ok(start..end)
 }
 
 fn main() -> Result<()> {
@@ -36,7 +51,7 @@ fn main() -> Result<()> {
         }
     }
     if let Some(range) = args.multiple {
-        let output = format::multiple(parse_range(&range)?)?;
+        let output = format::multiple(parse_range(&range)?);
 
         if args.file {
             file::save_to_file(output, range)?;
