@@ -1,13 +1,18 @@
 use eyre::Result;
 use std::{env::current_dir, fs::File, io::Write};
 
-pub fn save_to_file(output: String, amount: String) -> Result<()> {
-    let file_name = format!("{}th_fibonacci.txt", amount);
+/// saves contents to current dir and prints a small info message
+pub fn save(output: &str, n: &str) -> Result<()> {
+    let file_name = format!("{n}th_fibonacci.txt");
     let current_dir = current_dir()?.canonicalize()?;
 
     let mut file = File::create(&file_name)?;
-    file.write(output.as_bytes())?;
-    println!("saved file {} to {}", file_name, current_dir.to_string_lossy().trim_start_matches(r"\\?\"));
+    file.write_all(output.as_bytes())?;
+    println!(
+        "saved file {} to {}",
+        file_name,
+        current_dir.to_string_lossy().trim_start_matches(r"\\?\")
+    );
 
     Ok(())
 }

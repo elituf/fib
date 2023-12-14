@@ -10,12 +10,13 @@ pub struct Analytics {
     pub num_digits: usize,
 }
 
-/// calculates only the nth fibonacci number
-pub fn calculate_fib_sing(n: usize) -> (BigUint, Analytics) {
+/// calculates only the nth fibonacci number, and returns with calculation time
+pub fn single(n: usize) -> (BigUint, Analytics) {
+    let start_time = Instant::now();
+
     let mut a = BigUint::zero();
     let mut b = BigUint::one();
 
-    let start_time = Instant::now();
     for _ in 0..n {
         let next = a + &b;
         a = replace(&mut b, next);
@@ -30,13 +31,14 @@ pub fn calculate_fib_sing(n: usize) -> (BigUint, Analytics) {
     (a, analytics)
 }
 
-/// calculates the fibonacci sequence 0..n into a vector
-pub fn calculate_fib_mult(end: usize) -> (Vec<BigUint>, Analytics) {
+/// calculates the fibonacci sequence 0..n into a vector, and returns with calculation time
+pub fn multiple(end: usize) -> (Vec<BigUint>, Analytics) {
+    let start_time = Instant::now();
+
     let mut a = BigUint::zero();
     let mut b = BigUint::one();
     let mut calc_fib_vector: Vec<BigUint> = Vec::new();
 
-    let start_time = Instant::now();
     for _ in 0..=end {
         calc_fib_vector.push(a.clone());
         let next = a + &b;

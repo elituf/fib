@@ -1,37 +1,15 @@
+use crate::args::Args;
 use clap::Parser;
 use eyre::Result;
 use std::ops::Range;
 
-mod calculation;
+mod args;
+mod calculate;
 mod file;
 mod format;
 
-/// fib: an overly complicated fibonacci calculator
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None, arg_required_else_help = true)]
-pub struct Args {
-    /// calculate the nth fibonacci number
-    #[arg(short, long)]
-    pub single: Option<usize>,
-
-    /// calculate [n..n] fibonacci numbers
-    #[arg(short, long)]
-    pub multiple: Option<String>,
-
-    /// whether to print the "analytics" (calc time, print time etc)
-    #[arg(short, long)]
-    pub analytics: bool,
-
-    /// whether to separate thousands with commas
-    #[arg(short, long)]
-    pub commas: bool,
-
-    /// whether to save the number(s) to a file instead of printing
-    #[arg(short, long)]
-    pub file: bool,
-}
-
-fn parse_range(range: &String) -> Result<Range<usize>> {
+/// parses a string of type "n..n" into a proper Range<usize>
+fn parse_range(range: &str) -> Result<Range<usize>> {
     let range: Vec<&str> = range.split("..").collect();
     let start: usize = range[0].parse()?;
     let end: usize = range[1].parse()?;
@@ -45,18 +23,18 @@ fn main() -> Result<()> {
         let output = format::single(n);
 
         if args.file {
-            file::save_to_file(output, n.to_string())?;
+            file::save(&output, &n.to_string())?;
         } else {
-            println!("{}", output);
+            println!("{output}");
         }
     }
     if let Some(range) = args.multiple {
         let output = format::multiple(parse_range(&range)?);
 
         if args.file {
-            file::save_to_file(output, range)?;
+            file::save(&output, &range)?;
         } else {
-            println!("{}", output);
+            println!("{output}");
         }
     }
 
