@@ -4,15 +4,15 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None, arg_required_else_help = true)]
 pub struct Args {
-    /// calculate the nth fibonacci number
+    /// calculate the <n>th fibonacci number
     #[arg(short, long)]
     pub single: Option<usize>,
 
-    /// calculate [n..n] fibonacci numbers
+    /// calculate <n..n> fibonacci numbers
     #[arg(short, long)]
     pub multiple: Option<String>,
 
-    /// whether to print the "analytics" (calc time, print time etc)
+    /// whether to print the "analytics" (calc time etc)
     #[arg(short, long)]
     pub analytics: bool,
 

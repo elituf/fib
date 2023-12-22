@@ -18,10 +18,8 @@ fn parse_range(range: &str) -> Result<Range<usize>> {
 
 fn main() -> Result<()> {
     let args = Args::parse();
-
     if let Some(n) = args.single {
         let output = format::single(n);
-
         if args.file {
             file::save(&output, &n.to_string())?;
         } else {
@@ -30,13 +28,11 @@ fn main() -> Result<()> {
     }
     if let Some(range) = args.multiple {
         let output = format::multiple(parse_range(&range)?);
-
         if args.file {
             file::save(&output, &range)?;
         } else {
             println!("{output}");
         }
     }
-
     Ok(())
 }
